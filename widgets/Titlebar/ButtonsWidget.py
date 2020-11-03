@@ -1,14 +1,13 @@
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QHBoxLayout
-from PyQt5.QtWidgets import QPushButton
-import PyQt5.QtSvg
-from PyQt5.QtCore import Qt
+from widgets.Titlebar.ButtonWidget import ButtonWidget
 
 class ButtonsWidget(QWidget):
 
     def __init__(self, parent=None):
         super(ButtonsWidget, self).__init__(parent)
 
+        self.__mainWindow = parent
         self.layout = QHBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.layout.setSpacing(0)
@@ -37,20 +36,17 @@ class ButtonsWidget(QWidget):
         }
         """
 
-        minimizeBtn = QPushButton("_")
+        minimizeBtn = ButtonWidget("widgets/Titlebar/assets/minimize.svg")
         minimizeBtn.setStyleSheet(btnNormalQss)
-        minimizeBtn.setFixedWidth(36)
-        minimizeBtn.setFixedHeight(36)
+        minimizeBtn.clicked.connect(self.MinimizeCallback)
 
-        maximizeBtn = QPushButton("□")
+        maximizeBtn = ButtonWidget("widgets/Titlebar/assets/maximize.svg")
         maximizeBtn.setStyleSheet(btnNormalQss)
-        maximizeBtn.setFixedWidth(36)
-        maximizeBtn.setFixedHeight(36)
+        maximizeBtn.clicked.connect(self.MaximizeCallback)
 
-        closeBtn = QPushButton("X")
+        closeBtn = ButtonWidget("widgets/Titlebar/assets/close.svg")
         closeBtn.setStyleSheet(btnCloseQss)
-        closeBtn.setFixedWidth(36)
-        closeBtn.setFixedHeight(36)
+        closeBtn.clicked.connect(self.CloseCallback)
 
         self.layout.addWidget(minimizeBtn)
         self.layout.addWidget(maximizeBtn)
@@ -59,3 +55,18 @@ class ButtonsWidget(QWidget):
         self.setLayout(self.layout)
         self.setFixedHeight(36)
         self.setFixedWidth(36 * 3)
+
+    def MinimizeCallback(self):
+        if self.__mainWindow is not None:
+            self.__mainWindow.showMinimized()
+
+    def MaximizeCallback(self):
+        if self.__mainWindow is not None:
+            if self.__mainWindow.isMaximized():
+                self.__mainWindow.showNormal()
+            else:
+                self.__mainWindow.showMaximized()
+
+    def CloseCallback(self):
+        if self.__mainWindow is not None:
+            self.__mainWindow.close()

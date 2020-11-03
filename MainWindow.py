@@ -20,10 +20,15 @@ class MainWindow(QMainWindow):
 
         layout = QVBoxLayout()
 
+        self.__titlebarWidget = TitlebarWidget(self)
+
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(TitlebarWidget(self))
+        layout.addWidget(self.__titlebarWidget)
         layout.addWidget(QLabel('este mare'))
 
         widget = QWidget()
         widget.setLayout(layout)
         self.setCentralWidget(widget)
+
+    def resizeEvent(self, event):
+        self.__titlebarWidget.OnResizeCallback(event)

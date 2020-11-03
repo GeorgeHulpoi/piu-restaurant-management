@@ -24,7 +24,7 @@ class TitlebarWidget(QWidget):
         """)
 
         self.layout.addWidget(titleLabel)
-        self.layout.addWidget(ButtonsWidget())
+        self.layout.addWidget(ButtonsWidget(parent))
         self.layout.setSpacing(0)
 
         self.setLayout(self.layout)
@@ -52,3 +52,6 @@ class TitlebarWidget(QWidget):
     def mouseReleaseEvent(self, event):
         if event.buttons() == Qt.LeftButton:
             self.__pressed = False
+
+    def OnResizeCallback(self, event):
+        self.setFixedWidth(self.parent.width())
