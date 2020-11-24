@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QLabel, QMainWindow
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from widgets.Titlebar.TitlebarWidget import TitlebarWidget
+from widgets.Map.MapWidget import MapWidget
 
 class MainWindow(QMainWindow):
 
@@ -10,7 +11,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Restaurant Manegement")
         self.setMinimumSize(900, 600)
-        self.setWindowFlags(Qt.Window | Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint)
         self.setStyleSheet("""
         QMainWindow
         {
@@ -21,10 +22,11 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
 
         self.__titlebarWidget = TitlebarWidget(self)
+        self.__mapWidget = MapWidget(self)
 
         layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(self.__titlebarWidget)
-        layout.addWidget(QLabel('este mare'))
+        layout.addWidget(self.__mapWidget)
 
         widget = QWidget()
         widget.setLayout(layout)
@@ -32,3 +34,4 @@ class MainWindow(QMainWindow):
 
     def resizeEvent(self, event):
         self.__titlebarWidget.OnResizeCallback(event)
+        self.__mapWidget.OnResizeCallback()

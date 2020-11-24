@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication
 from MainWindow import MainWindow
 
 # You need one (and only one) QApplication instance per application.
