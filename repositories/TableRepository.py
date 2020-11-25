@@ -1,6 +1,7 @@
 import sqlite3
 from models.Table import Table
 
+
 class TableRepository:
     dbFile = '../tabledb.db'
     tableName = 'tables_position'
@@ -11,11 +12,12 @@ class TableRepository:
 
         with TableRepository.__create_connection() as conn:
             with conn.cursor() as cursor:
-                sql = "SELECT table_id, pos_x, pos_y, rotation FROM " + TableRepository.tableName + " where table_id = " \
-                             + str(id)
+                sql = "SELECT id, pos_x, pos_y, rotation, type " \
+                      "FROM " + TableRepository.tableName + " " + \
+                      "WHERE id = " + str(id)
                 cursor.execute(sql)
                 row = cursor.fetchone()
-                result = Table(row[0], row[1], row[2], row[3])
+                result = Table(row[0], row[1], row[2], row[3], row[4])
 
         return result
 
@@ -25,11 +27,12 @@ class TableRepository:
 
         with TableRepository.__create_connection() as conn:
             with conn.cursor() as cursor:
-                sql = "SELECT table_id, pos_x, pos_y, rotation FROM " + TableRepository.tableName + " where table_id = " \
-                      + str(id)
+                sql = "SELECT id, pos_x, pos_y, rotation, type " \
+                      "FROM " + TableRepository.tableName + " " + \
+                      "WHERE id = " + str(id)
                 cursor.execute(sql)
                 rows = cursor.fetchall()
-                result = list(map(lambda r: Table(r[0], r[1], r[2], r[3]), rows))
+                result = list(map(lambda r: Table(r[0], r[1], r[2], r[3], r[4]), rows))
 
         return result
 
@@ -37,11 +40,12 @@ class TableRepository:
     def update(table):
         with TableRepository.__create_connection() as conn:
             with conn.cursor() as cursor:
-                sql = "UPDATE " + TableRepository.tableName + " " + "" \
+                sql = "UPDATE " + TableRepository.tableName + " " \
                       "SET pos_x = " + str(table.getX()) + ", " + \
                       "pos_y = " + str(table.getY()) + ", " + \
-                      "rotation = " + str(table.getRotation()) + " " + \
-                      "WHERE table_id = " + str(table.getId())
+                      "rotation = " + str(table.getRotation()) + ", " + \
+                      "type = " + str(table.getType()) + " " \
+                      "WHERE id = " + str(table.getId())
                 cursor.execute(sql)
                 conn.commit()
 

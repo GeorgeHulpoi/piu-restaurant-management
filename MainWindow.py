@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from widgets.Titlebar.TitlebarWidget import TitlebarWidget
 from widgets.Map.MapWidget import MapWidget
 
+
 class MainWindow(QMainWindow):
 
     def __init__(self, *args, **kwargs):

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Table:
     def __init__(self, id, x, y, rotation, type):
         self.__id = id
@@ -37,6 +38,7 @@ class Table:
 
     def setType(self, type):
         self.__type = type
+
 
 class TableType(Enum):
     ROUND_4 = 0
