@@ -12,7 +12,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Restaurant Manegement")
         self.setMinimumSize(900, 600)
-        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint)
+        self.setWindowFlags(Qt.Window)
         self.setStyleSheet("""
         QMainWindow
         {
@@ -26,7 +26,6 @@ class MainWindow(QMainWindow):
         self.__mapWidget = MapWidget(self)
 
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(self.__titlebarWidget)
         layout.addWidget(self.__mapWidget)
 
         widget = QWidget()
@@ -34,5 +33,5 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
 
     def resizeEvent(self, event):
-        self.__titlebarWidget.OnResizeCallback(event)
-        self.__mapWidget.OnResizeCallback()
+        #self.__titlebarWidget.OnResizeCallback(event)
+        pass

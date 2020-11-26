@@ -1,0 +1,286 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1009" height="1009" viewBox="0 0 1009 1009">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-SPRK_default_preset_name_web_1920_1);
+      }
+
+      .cls-2 {
+        fill: #f6c2c2;
+      }
+
+      .cls-3 {
+        fill: #fcecec;
+      }
+
+      .cls-4 {
+        filter: url(#dark-8);
+      }
+
+      .cls-5 {
+        filter: url(#light-8);
+      }
+
+      .cls-6 {
+        filter: url(#light-7);
+      }
+
+      .cls-7 {
+        filter: url(#dark-7);
+      }
+
+      .cls-8 {
+        filter: url(#dark-6);
+      }
+
+      .cls-9 {
+        filter: url(#light-6);
+      }
+
+      .cls-10 {
+        filter: url(#light-5);
+      }
+
+      .cls-11 {
+        filter: url(#dark-5);
+      }
+
+      .cls-12 {
+        filter: url(#dark-4);
+      }
+
+      .cls-13 {
+        filter: url(#light-4);
+      }
+
+      .cls-14 {
+        filter: url(#light-3);
+      }
+
+      .cls-15 {
+        filter: url(#dark-3);
+      }
+
+      .cls-16 {
+        filter: url(#dark-2);
+      }
+
+      .cls-17 {
+        filter: url(#light-2);
+      }
+
+      .cls-18 {
+        filter: url(#light);
+      }
+
+      .cls-19 {
+        filter: url(#dark);
+      }
+
+      .cls-20 {
+        filter: url(#table);
+      }
+    </style>
+    <filter id="table" x="-12" y="-12" width="1030" height="1030" filterUnits="userSpaceOnUse">
+      <feOffset dx="3" dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="dark" x="350" y="662" width="330" height="330" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-2"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="light" x="328" y="640" width="330" height="330" filterUnits="userSpaceOnUse">
+      <feOffset dx="-7" dy="-7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-3"/>
+      <feFlood flood-color="#fff" flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="light-2" x="405" y="717" width="220" height="220" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur-4"/>
+      <feFlood flood-color="#fff" flood-opacity="0.149"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="dark-2" x="375" y="687" width="220" height="220" filterUnits="userSpaceOnUse">
+      <feOffset dx="-15" dy="-15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur-5"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-5"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="dark-3" x="662" y="350" width="330" height="330" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-6"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-6"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="light-3" x="640" y="328" width="330" height="330" filterUnits="userSpaceOnUse">
+      <feOffset dx="-7" dy="-7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-7"/>
+      <feFlood flood-color="#fff" flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-7"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="light-4" x="717" y="405" width="220" height="220" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur-8"/>
+      <feFlood flood-color="#fff" flood-opacity="0.149"/>
+      <feComposite operator="in" in2="blur-8"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="dark-4" x="687" y="375" width="220" height="220" filterUnits="userSpaceOnUse">
+      <feOffset dx="-15" dy="-15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur-9"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-9"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="dark-5" x="38" y="350" width="330" height="330" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-10"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-10"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="light-5" x="16" y="328" width="330" height="330" filterUnits="userSpaceOnUse">
+      <feOffset dx="-7" dy="-7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-11"/>
+      <feFlood flood-color="#fff" flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-11"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="light-6" x="93" y="405" width="220" height="220" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur-12"/>
+      <feFlood flood-color="#fff" flood-opacity="0.149"/>
+      <feComposite operator="in" in2="blur-12"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="dark-6" x="63" y="375" width="220" height="220" filterUnits="userSpaceOnUse">
+      <feOffset dx="-15" dy="-15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur-13"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-13"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="dark-7" x="350" y="38" width="330" height="330" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-14"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-14"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="light-7" x="328" y="16" width="330" height="330" filterUnits="userSpaceOnUse">
+      <feOffset dx="-7" dy="-7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-15"/>
+      <feFlood flood-color="#fff" flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-15"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="light-8" x="405" y="93" width="220" height="220" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur-16"/>
+      <feFlood flood-color="#fff" flood-opacity="0.149"/>
+      <feComposite operator="in" in2="blur-16"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="dark-8" x="375" y="63" width="220" height="220" filterUnits="userSpaceOnUse">
+      <feOffset dx="-15" dy="-15" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur-17"/>
+      <feFlood flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur-17"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-SPRK_default_preset_name_web_1920_1">
+      <rect width="1009" height="1009"/>
+    </clipPath>
+  </defs>
+  <g id="SPRK_default_preset_name_web_1920_1" data-name="SPRK_default_preset_name_web_1920 – 1" class="cls-1">
+    <g id="table-2" data-name="table">
+      <g class="cls-20" transform="matrix(1, 0, 0, 1, 0, 0)">
+        <rect id="table-3" data-name="table" class="cls-2" width="1000" height="1000" rx="500"/>
+      </g>
+      <g id="S-plate" transform="translate(350 662)">
+        <g id="outer">
+          <g class="cls-19" transform="matrix(1, 0, 0, 1, -350, -662)">
+            <rect id="dark-9" data-name="dark" class="cls-3" width="300" height="300" rx="150" transform="translate(350 662)"/>
+          </g>
+          <g class="cls-18" transform="matrix(1, 0, 0, 1, -350, -662)">
+            <rect id="light-9" data-name="light" class="cls-3" width="300" height="300" rx="150" transform="translate(350 662)"/>
+          </g>
+        </g>
+        <g id="inner" transform="translate(70 70)">
+          <g class="cls-17" transform="matrix(1, 0, 0, 1, -420, -732)">
+            <rect id="light-10" data-name="light" class="cls-3" width="160" height="160" rx="80" transform="translate(420 732)"/>
+          </g>
+          <g class="cls-16" transform="matrix(1, 0, 0, 1, -420, -732)">
+            <rect id="dark-10" data-name="dark" class="cls-3" width="160" height="160" rx="80" transform="translate(420 732)"/>
+          </g>
+        </g>
+      </g>
+      <g id="E-plate" transform="translate(662 350)">
+        <g id="outer-2" data-name="outer">
+          <g class="cls-15" transform="matrix(1, 0, 0, 1, -662, -350)">
+            <rect id="dark-11" data-name="dark" class="cls-3" width="300" height="300" rx="150" transform="translate(662 350)"/>
+          </g>
+          <g class="cls-14" transform="matrix(1, 0, 0, 1, -662, -350)">
+            <rect id="light-11" data-name="light" class="cls-3" width="300" height="300" rx="150" transform="translate(662 350)"/>
+          </g>
+        </g>
+        <g id="inner-2" data-name="inner" transform="translate(70 70)">
+          <g class="cls-13" transform="matrix(1, 0, 0, 1, -732, -420)">
+            <rect id="light-12" data-name="light" class="cls-3" width="160" height="160" rx="80" transform="translate(732 420)"/>
+          </g>
+          <g class="cls-12" transform="matrix(1, 0, 0, 1, -732, -420)">
+            <rect id="dark-12" data-name="dark" class="cls-3" width="160" height="160" rx="80" transform="translate(732 420)"/>
+          </g>
+        </g>
+      </g>
+      <g id="W-plate" transform="translate(38 350)">
+        <g id="outer-3" data-name="outer">
+          <g class="cls-11" transform="matrix(1, 0, 0, 1, -38, -350)">
+            <rect id="dark-13" data-name="dark" class="cls-3" width="300" height="300" rx="150" transform="translate(38 350)"/>
+          </g>
+          <g class="cls-10" transform="matrix(1, 0, 0, 1, -38, -350)">
+            <rect id="light-13" data-name="light" class="cls-3" width="300" height="300" rx="150" transform="translate(38 350)"/>
+          </g>
+        </g>
+        <g id="inner-3" data-name="inner" transform="translate(70 70)">
+          <g class="cls-9" transform="matrix(1, 0, 0, 1, -108, -420)">
+            <rect id="light-14" data-name="light" class="cls-3" width="160" height="160" rx="80" transform="translate(108 420)"/>
+          </g>
+          <g class="cls-8" transform="matrix(1, 0, 0, 1, -108, -420)">
+            <rect id="dark-14" data-name="dark" class="cls-3" width="160" height="160" rx="80" transform="translate(108 420)"/>
+          </g>
+        </g>
+      </g>
+      <g id="N-plate" transform="translate(350 38)">
+        <g id="outer-4" data-name="outer">
+          <g class="cls-7" transform="matrix(1, 0, 0, 1, -350, -38)">
+            <rect id="dark-15" data-name="dark" class="cls-3" width="300" height="300" rx="150" transform="translate(350 38)"/>
+          </g>
+          <g class="cls-6" transform="matrix(1, 0, 0, 1, -350, -38)">
+            <rect id="light-15" data-name="light" class="cls-3" width="300" height="300" rx="150" transform="translate(350 38)"/>
+          </g>
+        </g>
+        <g id="inner-4" data-name="inner" transform="translate(70 70)">
+          <g class="cls-5" transform="matrix(1, 0, 0, 1, -420, -108)">
+            <rect id="light-16" data-name="light" class="cls-3" width="160" height="160" rx="80" transform="translate(420 108)"/>
+          </g>
+          <g class="cls-4" transform="matrix(1, 0, 0, 1, -420, -108)">
+            <rect id="dark-16" data-name="dark" class="cls-3" width="160" height="160" rx="80" transform="translate(420 108)"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

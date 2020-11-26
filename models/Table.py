@@ -42,5 +42,5 @@ class Table:
 
 class TableType(Enum):
     ROUND_4 = 0
-    RECTANGLE_4 = 1
+    SQUARE_4 = 1
     RECTANGLE_6 = 2

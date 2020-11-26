@@ -1,9 +1,11 @@
-from PyQt5.QtWidgets import QGraphicsView, QGraphicsScene
+from PyQt5.QtWidgets import QGraphicsView
 
-class CustomQGraphicsView(QGraphicsView):
+class ZoomableView(QGraphicsView):
 
     def __init__ (self, scene, parent=None):
-        super(CustomQGraphicsView, self).__init__(scene, parent)
+        super(ZoomableView, self).__init__(scene, parent)
+
+        self.setStyleSheet("background-color: #061727")
 
     def wheelEvent(self, event):
         # Zoom Factor
