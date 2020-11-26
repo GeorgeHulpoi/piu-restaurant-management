@@ -3,7 +3,7 @@ from models.Table import Table
 
 
 class TableRepository:
-    dbFile = '../tabledb.db'
+    dbFile = 'tabledb.db'
     tableName = 'tables_position'
 
     @staticmethod
