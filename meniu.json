@@ -1,0 +1,152 @@
+{
+  "Mancare":{
+    "Meniuri":{
+      "Meniu pui crispy":{
+        "pret":19,
+        "descriere":"pui crocant, cartofi, salata de varza, sos, 2 felii focacia"
+      },
+      "Meniu carnaciori":{
+        "pret":19,
+        "descriere":"carnaciori, cartofi, salata de varza, mustar, 2 felii focacia"
+      },
+      "Meniu snitel piept de pui":{
+        "pret":19,
+        "descriere":"snitel din piept de pui, cartofi, salata de varza, sos, 2 felii focacia"
+      },
+      "Meniu ceafa de porc la gratar":{
+        "pret":19,
+        "descriere":"ceafa de porc, cartofi, salata de varza, 2 felii focacia"
+      },
+      "Meniu piept de pui la gratar":{
+        "pret":22,
+        "descriere":"piept pui, cartofi sau ciuperci la gratar, salata de varza, 2 felii focacia"
+      },
+      "Meniu pulpe de pui dezosate la gratar":{
+        "pret":19,
+        "descriere":"pulpe pui dezosate, cartofi sau ciuperci la gratar, salata de varza, 2 felii focacia"
+      }
+    },
+    "Ciorbe":{
+      "Ciorba de legume":{
+        "pret":8.5,
+        "descriere":"ciorba de legume, 2 felii focacia, ardei"
+      },
+      "Ciorba taraneasca de perisoare":{
+        "pret":9.9,
+        "descriere":"carne de porc, legume, verdeata - 2 felii focacia, ardei"
+      },
+      "Ciorba taraneasca de vacuta":{
+        "pret":9.9,
+        "descriere":"carne de vita, legume, verdeata - 2 felii focacia, ardei"
+      },
+      "Ciorba taraneasca de pui":{
+        "pret":9.9,
+        "descriere":"carne de pui, legume, verdeata - 2 felii focacia, ardei"
+      }
+    },
+    "Paste":{
+      "PENNE Carbonara":{
+        "pret":19,
+        "descriere":"penne fresh, bacon, galbenus de ou, smantina, parmezan"
+      },
+      "PENNE Arabiata":{
+        "pret":17,
+        "descriere":"penne fresh, sos rosii, usturoi, busuioc fresh"
+      },
+      "PENNE Al Forno":{
+        "pret":21,
+        "descriere":"penne fresh, sos rosii, sunca, bacon, ciuperci, smantana, mozzarela, gratinate, parmezan"
+      },
+      "PENNE Quatro Formagi":{
+        "pret":21,
+        "descriere":"penne fresh, smantana, gorgonzola, mozzarela, parmezan"
+      }
+    },
+    "Pizza":{
+      "Pizza Margherita":{
+        "pret":11,
+        "descriere":"sos rosii, mozzarella"
+      },
+      "Pizza Prosciutto Funghi":{
+        "pret":13,
+        "descriere":"sos rosii, mozzarella, sunca, ciuperci"
+      },
+      "Pizza Capriciosa":{
+        "pret":14,
+        "descriere":"sos rosii, mozzarella, sunca, ciuperci, masline"
+      },
+      "Pizza Diavola":{
+        "pret":14,
+        "descriere":"sos rosii, mozzarella, salam picant, peperoncino"
+      },
+      "Pizza Quattro Stagioni":{
+        "pret":15,
+        "descriere":"sos rosii, mozzarella, sunca, ciuperci, ardei gras, masline, salam"
+      },
+      "Pizza Quattro Formaggi":{
+        "pret":15,
+        "descriere":"mozzarella, gorgonzola, brie, parmezan"
+      }
+    },
+    "Sosuri":{
+      "Sos picant":{
+        "pret":3,
+        "descriere":"Sos de rosii picant"
+      },
+      "Sos dulce":{
+        "pret":3,
+        "descriere":"Sos de rosii dulce"
+      },
+      "Sos alb":{
+        "pret":3,
+        "descriere":"Sos de maioneza cu usturoi"
+      }
+    }
+  },
+  "Desert":{
+    "Desert Milefeuille Cup":{
+      "pret":12,
+      "descriere":"crema de lapte, foietaj, zahar, lapte, aroma de vanilie"
+    },
+    "Desert Profiterol Cup":{
+      "pret":12,
+      "descriere":"ganache de ciocolata, crema de lapte, caramel, choux"
+    },
+    "Mousse Chocolat":{
+      "pret":12,
+      "descriere":"ciocolata, frisca, oua, zahar"
+    }
+  },
+  "Bauturi non-alcoolice":{
+    "Apa Plata Dorna 0.5L":{
+      "pret":3.5,
+      "descriere":"apa plata"
+    },
+    "Apa Minerala Dorna 0.5L":{
+      "pret":3.5,
+      "descriere":"apa minerala"
+    },
+    "Coca Cola 0.5L":{
+      "pret":5,
+      "descriere":"Coca Cola bautura carbogazoasa"
+    },
+    "Fanta 0.5L":{
+      "pret":5,
+      "descriere":"Fanta bautura carbogazoasa"
+    }
+  },
+  "Bauturi alcoolice":{
+    "Bere Bergenbier 0.5L":{
+      "pret":5,
+      "descriere":"bere blonda"
+    },
+    "Bere Heineken 0.5L":{
+      "pret":8,
+      "descriere":"bere blonda"
+    },
+    "Bere Timisoareana 0.5L":{
+      "pret":5,
+      "descriere":"bere blonda"
+    }
+  }
+}
