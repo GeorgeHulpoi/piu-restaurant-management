@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGraphicsView, QGraphicsScene
-from PyQt5.QtCore import QSize, Qt, QRectF
+from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QColor, QBrush
 from widgets.Map.Item import Item
 from models.Table import Table
@@ -9,14 +9,11 @@ import random
 
 class MapWidget(QWidget):
 
-    def __init__(self, parent, items=None):
+    def __init__(self, parent):
         super(MapWidget, self).__init__(parent)
 
-        if items is None:
-            items = []
-
         self.__parent = parent
-        self.__items = items
+        self.__items = []
 
         self.__layout = QVBoxLayout()
         self.setLayout(self.__layout)
@@ -33,10 +30,9 @@ class MapWidget(QWidget):
         self.__layout.addWidget(self.__view)
         self.__setupGrid()
 
-        for i in range(0, 5):
-            model = Table(i, random.randint(0, 1000), random.randint(0, 1000), 0.0, random.randint(0, 2))
-            item = Item(model, self.__scene)
-            self.__scene.addItem(item)
+    def addItem(self, item):
+        self.__scene.addItem(item)
+
 
     def __setupGrid(self):
         brush = QBrush()

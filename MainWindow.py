@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QLabel, QMainWindow
 from PyQt5.QtCore import Qt
+from widgets.Map.Item import Item
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from widgets.Titlebar.TitlebarWidget import TitlebarWidget
 from widgets.Map.MapWidget import MapWidget
+from repositories.TableRepository import TableRepository
 
 
 class MainWindow(QMainWindow):
@@ -24,6 +26,12 @@ class MainWindow(QMainWindow):
 
         self.__titlebarWidget = TitlebarWidget(self)
         self.__mapWidget = MapWidget(self)
+
+        models = TableRepository.find_all()
+
+        for model in models:
+            item = Item(model, self.__scene)
+            self.__mapWidget.addItem(item)
 
         layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(self.__mapWidget)
