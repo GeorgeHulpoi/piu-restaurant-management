@@ -3,10 +3,9 @@ from PyQt5.QtSvg import QGraphicsSvgItem
 from PyQt5.QtWidgets import QGraphicsItem
 
 class Item(QGraphicsSvgItem):
-    def __init__(self, model, scene):
+    def __init__(self, model):
 
         self.__model = model
-        self.__scene = scene
         self.__updateChanges = False
 
         svgPath = None
@@ -36,7 +35,7 @@ class Item(QGraphicsSvgItem):
         return value
 
     def __updatePosition(self, value):
-        bounding = self.__scene.sceneRect()
+        bounding = self.scene().sceneRect()
         internal_bounding = self.boundingRect()
 
         if value.x() >= 0:

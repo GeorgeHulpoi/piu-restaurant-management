@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
         models = TableRepository.find_all()
 
         for model in models:
-            item = Item(model, self.__scene)
+            item = Item(model)
             self.__mapWidget.addItem(item)
 
         layout.setContentsMargins(0, 0, 0, 0)
