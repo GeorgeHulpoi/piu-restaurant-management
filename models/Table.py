@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class Table:
     def __init__(self, id, x, y, rotation, type):
         self.__id = id

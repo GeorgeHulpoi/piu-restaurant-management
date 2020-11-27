@@ -1,6 +1,7 @@
 from models.Table import TableType
 from PyQt5.QtSvg import QGraphicsSvgItem
 from PyQt5.QtWidgets import QGraphicsItem
+from repositories.TableRepository import TableRepository
 
 class Item(QGraphicsSvgItem):
     def __init__(self, model):
@@ -38,24 +39,21 @@ class Item(QGraphicsSvgItem):
         bounding = self.scene().sceneRect()
         internal_bounding = self.boundingRect()
 
-        if value.x() >= 0:
-            self.__model.setX(value.x())
-        else:
+        if value.x() < 0:
             self.setX(0)
-
-        if value.x() + internal_bounding.width() <= bounding.width():
-            self.__model.setX(value.x())
-        else:
+        if value.x() + internal_bounding.width() > bounding.width():
             self.setX(bounding.width() - internal_bounding.width())
 
-        if value.y() >= 0:
-            self.__model.setY(value.y())
-        else:
+        if value.y() < 0:
             self.setY(0)
-
-        if value.y() + internal_bounding.height() <= bounding.height():
-            self.__model.setY(value.y())
-        else:
+        if value.y() + internal_bounding.height() > bounding.height():
             self.setY(bounding.height() - internal_bounding.height())
+
+        self.__model.setX(self.x())
+        self.__model.setY(self.y())
+
+    def mouseReleaseEvent(self, event):
+        super().mouseReleaseEvent(event)
+        TableRepository.update(self.__model)
 
 
