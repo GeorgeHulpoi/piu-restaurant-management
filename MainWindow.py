@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QLabel, QMainWindow
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import Qt
 from widgets.Map.Item import Item
 from PyQt5.QtWidgets import QWidget, QVBoxLayout

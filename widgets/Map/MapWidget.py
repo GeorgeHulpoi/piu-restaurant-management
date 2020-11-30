@@ -1,10 +1,8 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGraphicsView, QGraphicsScene
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGraphicsView, QGraphicsScene, QFrame
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QColor, QBrush
-from widgets.Map.Item import Item
-from models.Table import Table
 from widgets.Map.ZoomableView import ZoomableView
-import random
+from widgets.Map.Toolbox.ToolboxWidget import ToolboxWidget
 
 
 class MapWidget(QWidget):
@@ -27,6 +25,7 @@ class MapWidget(QWidget):
         self.__view.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.__view.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
+        self.__toolbox = ToolboxWidget(self)
         self.__layout.addWidget(self.__view)
         self.__setupGrid()
 

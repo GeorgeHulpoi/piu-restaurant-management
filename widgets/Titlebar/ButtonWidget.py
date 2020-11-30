@@ -11,11 +11,13 @@ class ButtonWidget(QPushButton):
         icon.setFixedWidth(12)
         icon.setFixedHeight(12)
         icon.setStyleSheet("background-color: transparent;")
+
         self.layout = QHBoxLayout()
         self.layout.addWidget(icon)
         self.setLayout(self.layout)
 
         self.setFixedHeight(36)
         self.setFixedWidth(36)
+
 
 
