@@ -1,10 +1,11 @@
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QFrame
 from PyQt5.QtCore import Qt
 from widgets.Map.Item import Item
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from widgets.Titlebar.TitlebarWidget import TitlebarWidget
 from widgets.Map.MapWidget import MapWidget
 from repositories.TableRepository import TableRepository
+from services.TableOrderViewService import TableOrderViewService
 
 
 class MainWindow(QMainWindow):
@@ -40,6 +41,13 @@ class MainWindow(QMainWindow):
         widget.setLayout(layout)
         self.setCentralWidget(widget)
 
+        self.frame = QFrame(self)
+        self.frame.setGeometry(0, 0, self.width(), self.height())
+        self.frame.setContentsMargins(0, 0, 0, 0)
+        self.frame.setStyleSheet("background: red;")
+        self.frame.setVisible(False)
+        TableOrderViewService.setWidget(self.frame)
+
     def resizeEvent(self, event):
         #self.__titlebarWidget.OnResizeCallback(event)
-        pass
+        self.frame.setGeometry(0, 0, self.width(), self.height())

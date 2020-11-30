@@ -2,6 +2,9 @@ from models.Table import TableType
 from PyQt5.QtSvg import QGraphicsSvgItem
 from PyQt5.QtWidgets import QGraphicsItem
 from repositories.TableRepository import TableRepository
+from services.TableOrderViewService import TableOrderViewService
+import time
+
 
 class Item(QGraphicsSvgItem):
     def __init__(self, model):
@@ -53,7 +56,20 @@ class Item(QGraphicsSvgItem):
         self.__model.setY(self.y())
 
     def mouseReleaseEvent(self, event):
-        super().mouseReleaseEvent(event)
+        duration = time.time() - self.timestampPressedEvent
+
+        if duration < 0.3 and self.x() == self.positionPressedEvent[0] and self.y() == self.positionPressedEvent[1]:
+            self.__onClick()
+
         TableRepository.update(self.__model)
+        super().mouseReleaseEvent(event)
+
+    def __onClick(self):
+        TableOrderViewService.showWidget(self.__model)
+
+    def mousePressEvent(self, event):
+        super().mousePressEvent(event)
+        self.timestampPressedEvent = time.time()
+        self.positionPressedEvent = (self.x(), self.y())
 
 
