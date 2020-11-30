@@ -1,31 +1,42 @@
-from PyQt5.QtWidgets import QMainWindow, QFrame
-from PyQt5.QtCore import Qt
-from widgets.Map.Item import Item
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from widgets.Titlebar.TitlebarWidget import TitlebarWidget
-from widgets.Map.MapWidget import MapWidget
+# PyQt5
+from PyQt5 import QtCore, QtWidgets
+
+# REPOSITORIES
 from repositories.TableRepository import TableRepository
+
+# SERVICES
 from services.TableOrderViewService import TableOrderViewService
 
+# WIDGETS
+from widgets.Map.MapWidget import MapWidget
+from widgets.Map.Item import Item
+from widgets.TableOrderView.TableOrderView import TableOrderView
 
-class MainWindow(QMainWindow):
+
+class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
 
-        self.setWindowTitle("Restaurant Manegement")
-        self.setMinimumSize(900, 600)
-        self.setWindowFlags(Qt.Window)
-        self.setStyleSheet("""
-        QMainWindow
-        {
-            background-color: #202530;
-        }
-        """)
+        # CALL SUPER
+        super(MainWindow, self).__init__()
 
-        layout = QVBoxLayout()
+        # CONFIGURE MAIN WINDOW
+        self.width = kwargs.get('width', 1280)
+        self.height = kwargs.get('height', 720)
+        self.title = kwargs.get('title', 'App')
+        self.setMinimumSize(self.width, self.height)
+        self.setWindowTitle(self.title)
 
-        self.__titlebarWidget = TitlebarWidget(self)
+        # SETUP STYLE SHEET
+        self.setStyleSheet('background-color: #202530;')
+
+        # CONFIG MAIN WIDGET
+        centralwidget = QtWidgets.QWidget()
+        centralwidget.setLayout(QtWidgets.QVBoxLayout())
+        centralwidget.layout().setContentsMargins(QtCore.QMargins(0,0,0,0))
+        centralwidget.layout().setSpacing(0)
+        
+        # SETUP TABLE MAP WIDGET
         self.__mapWidget = MapWidget(self)
 
         models = TableRepository.find_all()
@@ -33,21 +44,21 @@ class MainWindow(QMainWindow):
         for model in models:
             item = Item(model)
             self.__mapWidget.addItem(item)
+        
+        # ADD TABLE MAP WIDGET TO BASE WIDGET
+        centralwidget.layout().addWidget(self.__mapWidget)
 
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(self.__mapWidget)
+        # SETUP MAIN WIDGET
+        self.setCentralWidget(centralwidget)
 
-        widget = QWidget()
-        widget.setLayout(layout)
-        self.setCentralWidget(widget)
+        # SETUP TABLE ORDER SERVICE
+        TableOrderViewService.setWidget(TableOrderView(self, self.width, self.height))
 
-        self.frame = QFrame(self)
-        self.frame.setGeometry(0, 0, self.width(), self.height())
-        self.frame.setContentsMargins(0, 0, 0, 0)
-        self.frame.setStyleSheet("background: red;")
-        self.frame.setVisible(False)
-        TableOrderViewService.setWidget(self.frame)
+        # CENTER WINDOW BEFORE DISPLAY
+        rectangle = self.frameGeometry()
+        centerPoint = QtWidgets.QDesktopWidget().availableGeometry().center()
+        rectangle.moveCenter(centerPoint)
+        self.move(rectangle.topLeft())
 
-    def resizeEvent(self, event):
-        #self.__titlebarWidget.OnResizeCallback(event)
-        self.frame.setGeometry(0, 0, self.width(), self.height())
+        # DISPLAY MAIN WINDOW
+        self.show()

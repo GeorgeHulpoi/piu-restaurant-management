@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt
 
 from widgets.Titlebar.ButtonsWidget import ButtonsWidget
 
+
 class TitlebarWidget(QWidget):
 
     def __init__(self, parent):

@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtSvg import QSvgWidget
 
+
 class ButtonWidget(QPushButton):
 
     def __init__(self, svgPath, parent=None):
@@ -18,6 +19,3 @@ class ButtonWidget(QPushButton):
 
         self.setFixedHeight(36)
         self.setFixedWidth(36)
-
-
-
