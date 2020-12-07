@@ -42,7 +42,7 @@ class MainWindow(QtWidgets.QMainWindow):
         models = TableRepository.find_all()
 
         for model in models:
-            item = Item(model)
+            item = Item(model, self.__mapWidget)
             self.__mapWidget.addItem(item)
         
         # ADD TABLE MAP WIDGET TO BASE WIDGET
