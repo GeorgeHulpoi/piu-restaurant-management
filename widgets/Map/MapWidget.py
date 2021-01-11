@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QColor, QBrush
 from widgets.Map.ZoomableView import ZoomableView
 from widgets.Map.Toolbox.ToolboxWidget import ToolboxWidget
+from widgets.Map.Createbox.CreateboxWidget import CreateboxWidget
 from widgets.Map.MapMode import MapMode
 from rx.subject import BehaviorSubject
 
@@ -24,15 +25,25 @@ class MapWidget(QWidget):
         self.__scene = QGraphicsScene(0, 0, 1000, 1000)
         self.__view = ZoomableView(self.__scene, self)
         self.__view.setDragMode(QGraphicsView.ScrollHandDrag)
+        self.__view.acceptDrops()
 
         self.__view.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.__view.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         self.__toolbox = ToolboxWidget(self)
+        self.__createbox = CreateboxWidget(self)
         self.__layout.addWidget(self.__view)
         self.__setupGrid()
 
         self.__mode_subject.subscribe(lambda m: self.on_mode_changes(m))
+
+        self.setStyleSheet("""
+        QWidget
+        {
+            border: 0;
+            outline: 0;
+        }
+        """)
 
     def addItem(self, item):
         self.__scene.addItem(item)
@@ -46,11 +57,23 @@ class MapWidget(QWidget):
     def get_mode(self):
         return self.__mode
 
+    def get_view(self):
+        return self.__view
+
+    def get_scene(self):
+        return self.__scene
+
+    def get_parent(self):
+        return self.__parent
+
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_M:
             self.__mode_subject.on_next(MapMode.MOVE_ITEMS)
         if event.key() == Qt.Key_R:
             self.__mode_subject.on_next(MapMode.ROTATE_ITEMS)
+
+    def resizeEvent(self, event):
+        self.__createbox.update_view()
 
     def __setupGrid(self):
         brush = QBrush()

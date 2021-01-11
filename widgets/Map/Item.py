@@ -1,6 +1,8 @@
+from PyQt5.QtCore import Qt
+
 from models.Table import TableType
 from PyQt5.QtSvg import QGraphicsSvgItem
-from PyQt5.QtWidgets import QGraphicsItem
+from PyQt5.QtWidgets import QGraphicsItem, QMenu
 from PyQt5.QtGui import QTransform
 from repositories.TableRepository import TableRepository
 from services.TableOrderViewService import TableOrderViewService
@@ -17,18 +19,15 @@ class Item(QGraphicsSvgItem):
         self.__pressed = False
         self.__parent_widget = parent_widget
 
-        svgPath = None
-        if self.__model.getType() == TableType.ROUND_4:
-            svgPath = 'widgets/Map/assets/round_table.svg'
-        elif self.__model.getType() == TableType.SQUARE_4:
-            svgPath = 'widgets/Map/assets/square_table.svg'
-        elif self.__model.getType() == TableType.RECTANGLE_6:
-            svgPath = 'widgets/Map/assets/rectangle_table.svg'
+        svgPath = 'widgets/Map/assets/4_table.svg'
 
-        super(Item, self).__init__('widgets/Map/assets/table.svg')
+        if self.__model.getType() == TableType.RECTANGLE_6:
+            svgPath = 'widgets/Map/assets/6_table.svg'
+
+
+        super(Item, self).__init__(svgPath)
 
         self.setScale(1)
-        self.setFlag(QGraphicsItem.ItemIsSelectable)
         self.setFlag(QGraphicsItem.ItemIsMovable)
         self.setFlag(QGraphicsItem.ItemSendsGeometryChanges)
 
@@ -41,18 +40,30 @@ class Item(QGraphicsSvgItem):
     def itemChange(self, change, value):
         if self.__updateChanges:
             if change == QGraphicsItem.GraphicsItemChange.ItemPositionHasChanged:
-                self.__updatePosition(value)
+                self.updatePosition(value)
+            elif change == QGraphicsItem.GraphicsItemChange.ItemTransformHasChanged:
+                print(self.rotation())
+                self.__model.setRotation(self.rotation())
 
         return value
 
     def on_mode_changes(self, mode):
         if mode == MapMode.ROTATE_ITEMS:
+            self.setFlag(QGraphicsItem.ItemIsSelectable)
             self.setFlags(self.flags() & ~QGraphicsItem.ItemIsMovable)
         elif mode == MapMode.MOVE_ITEMS:
+            self.setFlags(self.flags() & ~QGraphicsItem.ItemIsSelectable)
             self.setFlag(QGraphicsItem.ItemIsMovable)
+        else:
+            self.setFlags(self.flags() & ~QGraphicsItem.ItemIsSelectable)
+            self.setFlags(self.flags() & ~QGraphicsItem.ItemIsMovable)
 
-    def __updatePosition(self, value):
-        if self.__parent_widget.get_mode() == MapMode.MOVE_ITEMS:
+    def get_model(self):
+        return self.__model
+
+    def updatePosition(self, value):
+        if self.__parent_widget.get_mode() == MapMode.MOVE_ITEMS or \
+            self.__parent_widget.get_mode() == MapMode.CREATE_ITEMS:
             bounding = self.scene().sceneRect()
             internal_bounding = self.boundingRect()
 
@@ -69,15 +80,20 @@ class Item(QGraphicsSvgItem):
             self.__model.setX(self.x())
             self.__model.setY(self.y())
 
+    def setCenter(self, point):
+        internal_bounding = self.boundingRect()
+        self.setX(point.x() - internal_bounding.width()/2.0)
+        self.setY(point.y() - internal_bounding.height()/2.0)
+
     def mouseReleaseEvent(self, event):
-        print(event)
-        duration = time.time() - self.timestampPressedEvent
+        if event.buttons() & Qt.LeftButton:
+            duration = time.time() - self.timestampPressedEvent
 
-        if duration < 0.3 and self.x() == self.positionPressedEvent[0] and self.y() == self.positionPressedEvent[1]:
-            self.__onClick()
+            if duration < 0.3 and self.x() == self.positionPressedEvent[0] and self.y() == self.positionPressedEvent[1]:
+                self.__onClick()
 
-        TableRepository.update(self.__model)
-        self.__pressed = False
+            TableRepository.update(self.__model)
+            self.__pressed = False
         super().mouseReleaseEvent(event)
 
     def __onClick(self):
@@ -98,16 +114,31 @@ class Item(QGraphicsSvgItem):
             bounding = self.boundingRect()
             x = bounding.x() + bounding.width()/2
             y = bounding.y() + bounding.height()/2
-            self.setTransform(QTransform().translate(x, y).rotate(-angle).translate(-x, -y));
+            self.setTransform(QTransform().translate(x, y).rotate(-angle).translate(-x, -y))
 
 
         super().mouseMoveEvent(event)
 
     def mousePressEvent(self, event):
-        self.__pressed = True
-        self.timestampPressedEvent = time.time()
-        self.positionPressedEvent = (self.x(), self.y())
-        self.mouse_pos_pressed = event.scenePos()
+        if event.buttons() & Qt.LeftButton:
+            self.__pressed = True
+            self.timestampPressedEvent = time.time()
+            self.positionPressedEvent = (self.x(), self.y())
+            self.mouse_pos_pressed = event.scenePos()
         super().mousePressEvent(event)
 
+    def contextMenuEvent(self, event):
+        menu = QMenu()
+        action = menu.addAction("Open")
+        action.triggered.connect(self.on_open_callback)
+        action = menu.addAction("Delete")
+        action.triggered.connect(self.on_delete_callback)
+        menu.exec(event.screenPos())
+
+    def on_open_callback(self, checked=False):
+        self.__onClick()
+
+    def on_delete_callback(self, checked=False):
+        TableRepository.deleteById(int(self.get_model().getId()))
+        self.__parent_widget.get_scene().removeItem(self)
 
