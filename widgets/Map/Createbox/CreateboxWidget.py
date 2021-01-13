@@ -1,5 +1,7 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QListWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from PyQt5.QtCore import Qt
+
+from services.WindowService import WindowService
 from widgets.Map.MapMode import MapMode
 from widgets.Map.Createbox.TableList import TableList
 
@@ -8,30 +10,27 @@ class CreateboxWidget(QWidget):
     def __init__(self, parent=None):
         super(CreateboxWidget, self).__init__(parent)
 
-        self.__parent = parent
-        self.__layout = QVBoxLayout()
-        self.__layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-        self.update_view()
+        self.parent = parent
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        self.layout().setContentsMargins(0, 0, 0, 0)
+        self.layout().setSpacing(0)
         self.raise_()
-        self.__layout.setContentsMargins(0, 0, 0, 0)
-        self.__layout.setSpacing(0)
         self.setAttribute(Qt.WA_StyledBackground, True)
 
-        self.setLayout(self.__layout)
+        self.layout().addWidget(TableList(self))
 
-        list = TableList(self)
-        self.__layout.addWidget(list)
+        parent.modeObserver().subscribe(self.onModeChanges)
+        WindowService.resizeSubject.subscribe(self.onWindowResize)
 
-        parent.get_mode_observer().subscribe(lambda m: self.on_mode_changes(m))
-
-    def on_mode_changes(self, mode):
+    def onModeChanges(self, mode):
         if mode == MapMode.CREATE_ITEMS:
             self.show()
-            window_geometry = self.__parent.get_parent().frameGeometry()
+            window_geometry = self.parent.parent().frameGeometry()
             self.move(window_geometry.width() - 400, 0)
         else:
             self.hide()
 
-    def update_view(self):
-        window_geometry = self.__parent.get_parent().frameGeometry()
-        self.setGeometry(window_geometry.width() - 400, 0, 200, window_geometry.height())
+    def onWindowResize(self, event):
+        geometry = WindowService.instance.frameGeometry()
+        self.setGeometry(geometry.width() - 400, 0, 200, geometry.height())

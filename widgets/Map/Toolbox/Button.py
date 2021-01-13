@@ -5,12 +5,13 @@ from PyQt5.QtSvg import QSvgWidget
 from PyQt5.QtWidgets import QHBoxLayout
 import pathlib
 
+
 class Button(QPushButton):
 
     def __init__(self, icon, mode, observer):
         super(Button, self).__init__()
 
-        self.__mode = mode
+        self.mode = mode
 
         iconPath = str(pathlib.Path(__file__).parent.absolute()) + "/assets/" + icon
         icon = QSvgWidget(iconPath, self)
@@ -18,23 +19,22 @@ class Button(QPushButton):
         icon.setFixedHeight(22)
         icon.setStyleSheet("background: transparent")
 
-        self.__layout = QHBoxLayout()
-        self.__layout.addWidget(icon)
-        self.setLayout(self.__layout)
+        self.setLayout(QHBoxLayout())
+        self.layout().addWidget(icon)
 
         self.setFixedHeight(50)
         self.setFixedWidth(50)
         self.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
 
-        observer.subscribe(lambda m: self.on_mode_changes(m))
+        observer.subscribe(self.onModeChanges)
 
-    def on_mode_changes(self, mode):
-        if mode == self.__mode:
-            self.set_active()
+    def onModeChanges(self, mode):
+        if mode == self.mode:
+            self.setActive()
         else:
-            self.set_inactive()
+            self.setInactive()
 
-    def set_active(self):
+    def setActive(self):
         self.setStyleSheet("""
         Button 
         {
@@ -43,7 +43,7 @@ class Button(QPushButton):
         }
         """)
 
-    def set_inactive(self):
+    def setInactive(self):
         self.setStyleSheet("""
         Button 
         {

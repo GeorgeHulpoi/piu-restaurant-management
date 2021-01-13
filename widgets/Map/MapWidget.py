@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGraphicsView, QGraphicsScene
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QColor, QBrush
-from widgets.Map.ZoomableView import ZoomableView
+from widgets.Map.GraphicsView import GraphicsView
 from widgets.Map.Toolbox.ToolboxWidget import ToolboxWidget
 from widgets.Map.Createbox.CreateboxWidget import CreateboxWidget
 from widgets.Map.MapMode import MapMode
@@ -17,13 +17,12 @@ class MapWidget(QWidget):
         self.__mode = None
         self.__mode_subject = BehaviorSubject(MapMode.MOVE_ITEMS)
 
-        self.__layout = QVBoxLayout()
-        self.setLayout(self.__layout)
+        self.setLayout(QVBoxLayout())
 
-        self.__layout.setContentsMargins(0, 0, 0, 0)
+        self.layout().setContentsMargins(0, 0, 0, 0)
 
         self.__scene = QGraphicsScene(0, 0, 1000, 1000)
-        self.__view = ZoomableView(self.__scene, self)
+        self.__view = GraphicsView(self.__scene, self)
         self.__view.setDragMode(QGraphicsView.ScrollHandDrag)
         self.__view.acceptDrops()
 
@@ -32,10 +31,10 @@ class MapWidget(QWidget):
 
         self.__toolbox = ToolboxWidget(self)
         self.__createbox = CreateboxWidget(self)
-        self.__layout.addWidget(self.__view)
+        self.layout().addWidget(self.__view)
         self.__setupGrid()
 
-        self.__mode_subject.subscribe(lambda m: self.on_mode_changes(m))
+        self.__mode_subject.subscribe(lambda m: self.onModeChanges(m))
 
         self.setStyleSheet("""
         QWidget
@@ -45,26 +44,34 @@ class MapWidget(QWidget):
         }
         """)
 
+
     def addItem(self, item):
         self.__scene.addItem(item)
 
-    def get_mode_observer(self):
+
+    def modeObserver(self):
         return self.__mode_subject
 
-    def on_mode_changes(self, mode):
+
+    def onModeChanges(self, mode):
         self.__mode = mode
 
-    def get_mode(self):
+
+    def mode(self):
         return self.__mode
 
-    def get_view(self):
+
+    def view(self):
         return self.__view
 
-    def get_scene(self):
+
+    def scene(self):
         return self.__scene
 
-    def get_parent(self):
+
+    def parent(self):
         return self.__parent
+
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_M:
@@ -72,8 +79,6 @@ class MapWidget(QWidget):
         if event.key() == Qt.Key_R:
             self.__mode_subject.on_next(MapMode.ROTATE_ITEMS)
 
-    def resizeEvent(self, event):
-        self.__createbox.update_view()
 
     def __setupGrid(self):
         brush = QBrush()

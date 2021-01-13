@@ -6,14 +6,15 @@ from widgets.Map.Createbox.TableList import TableList
 from widgets.Map.Item import Item
 
 
-class ZoomableView(QGraphicsView):
+class GraphicsView(QGraphicsView):
 
     def __init__ (self, scene, parent=None):
-        super(ZoomableView, self).__init__(scene, parent)
+        super(GraphicsView, self).__init__(scene, parent)
 
         self.__parent = parent
         self.__scene = scene
         self.setStyleSheet("background-color: #061727")
+
 
     def wheelEvent(self, event):
         # Zoom Factor
@@ -41,8 +42,10 @@ class ZoomableView(QGraphicsView):
         delta = newPos - oldPos
         self.translate(delta.x(), delta.y())
 
+
     def dragMoveEvent(self, event):
         pass
+
 
     def dragEnterEvent(self, event):
         if not isinstance(event.source(), TableList):
@@ -66,4 +69,4 @@ class ZoomableView(QGraphicsView):
         item = Item(model, self.__parent)
         self.__scene.addItem(item)
         item.setCenter(pos)
-        TableRepository.update(item.get_model())
+        TableRepository.update(item.model())

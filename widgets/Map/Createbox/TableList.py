@@ -1,6 +1,5 @@
-from PyQt5 import QtCore
 from PyQt5.QtCore import QSize
-from PyQt5.QtGui import QPixmap, QIcon, QCursor
+from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidget, QAbstractItemView, QListWidgetItem
 from models.Table import TableType
@@ -45,12 +44,12 @@ class TableList(QListWidget):
         }
         """)
 
-        self.add_item(TableType.SQUARE_4,'Table 4 Chars',
+        self.addItem(TableType.SQUARE_4,'Table 4 Chars',
                       'widgets/Map/assets/4_table_icon.png', QSize(64, 64))
-        self.add_item(TableType.RECTANGLE_6, 'Table 6 Chars',
+        self.addItem(TableType.RECTANGLE_6, 'Table 6 Chars',
                       'widgets/Map/assets/6_table_icon.png', QSize(64, 90))
 
-    def add_item(self, type, name, icon, size):
+    def addItem(self, type, name, icon, size):
         item = QListWidgetItem(name, self)
         pixmap = QPixmap(icon)
         item.setIcon(QIcon(pixmap))
