@@ -10,7 +10,7 @@ from services.TableOrderViewService import TableOrderViewService
 # WIDGETS
 from widgets.Map.MapWidget import MapWidget
 from widgets.Map.Item import Item
-from widgets.TableOrderView.TableOrderView import TableOrderView
+#from widgets.TableOrderView.TableOrderView import TableOrderView
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -33,9 +33,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # CONFIG MAIN WIDGET
         centralwidget = QtWidgets.QWidget()
         centralwidget.setLayout(QtWidgets.QVBoxLayout())
-        centralwidget.layout().setContentsMargins(QtCore.QMargins(0,0,0,0))
+        centralwidget.layout().setContentsMargins(QtCore.QMargins(0, 0, 0, 0))
         centralwidget.layout().setSpacing(0)
-        
+
         # SETUP TABLE MAP WIDGET
         self.__mapWidget = MapWidget(self)
 
@@ -44,7 +44,7 @@ class MainWindow(QtWidgets.QMainWindow):
         for model in models:
             item = Item(model, self.__mapWidget)
             self.__mapWidget.addItem(item)
-        
+
         # ADD TABLE MAP WIDGET TO BASE WIDGET
         centralwidget.layout().addWidget(self.__mapWidget)
 
@@ -52,7 +52,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(centralwidget)
 
         # SETUP TABLE ORDER SERVICE
-        TableOrderViewService.setWidget(TableOrderView(self, self.width, self.height))
+        # TableOrderViewService.setWidget(TableOrderView(self, self.width, self.height))
 
         # CENTER WINDOW BEFORE DISPLAY
         rectangle = self.frameGeometry()
