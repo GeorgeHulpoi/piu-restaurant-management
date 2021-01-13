@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGraphicsView, QGraphicsScene, QFrame
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGraphicsView, QGraphicsScene
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QColor, QBrush
 from widgets.Map.ZoomableView import ZoomableView

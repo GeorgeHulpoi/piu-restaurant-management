@@ -1,5 +1,6 @@
+from PyQt5 import QtCore
 from PyQt5.QtCore import QSize
-from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtGui import QPixmap, QIcon, QCursor
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidget, QAbstractItemView, QListWidgetItem
 from models.Table import TableType

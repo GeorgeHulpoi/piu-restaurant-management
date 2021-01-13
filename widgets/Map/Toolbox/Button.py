@@ -1,3 +1,5 @@
+from PyQt5 import QtCore
+from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtSvg import QSvgWidget
 from PyQt5.QtWidgets import QHBoxLayout
@@ -10,7 +12,7 @@ class Button(QPushButton):
 
         self.__mode = mode
 
-        iconPath = str(pathlib.Path(__file__).parent.absolute()) + "\\assets\\" + icon
+        iconPath = str(pathlib.Path(__file__).parent.absolute()) + "/assets/" + icon
         icon = QSvgWidget(iconPath, self)
         icon.setFixedWidth(22)
         icon.setFixedHeight(22)
@@ -22,6 +24,7 @@ class Button(QPushButton):
 
         self.setFixedHeight(50)
         self.setFixedWidth(50)
+        self.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
 
         observer.subscribe(lambda m: self.on_mode_changes(m))
 

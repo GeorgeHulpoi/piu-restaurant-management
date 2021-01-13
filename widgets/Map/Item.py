@@ -1,9 +1,10 @@
+from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 
 from models.Table import TableType
 from PyQt5.QtSvg import QGraphicsSvgItem
 from PyQt5.QtWidgets import QGraphicsItem, QMenu
-from PyQt5.QtGui import QTransform
+from PyQt5.QtGui import QTransform, QCursor
 from repositories.TableRepository import TableRepository
 from services.TableOrderViewService import TableOrderViewService
 import math
@@ -30,6 +31,7 @@ class Item(QGraphicsSvgItem):
         self.setScale(1)
         self.setFlag(QGraphicsItem.ItemIsMovable)
         self.setFlag(QGraphicsItem.ItemSendsGeometryChanges)
+        self.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
 
         self.setX(self.__model.getX())
         self.setY(self.__model.getY())
@@ -52,7 +54,7 @@ class Item(QGraphicsSvgItem):
             self.setFlag(QGraphicsItem.ItemIsSelectable)
             self.setFlags(self.flags() & ~QGraphicsItem.ItemIsMovable)
         elif mode == MapMode.MOVE_ITEMS:
-            self.setFlags(self.flags() & ~QGraphicsItem.ItemIsSelectable)
+            self.setFlags(QGraphicsItem.ItemIsSelectable)
             self.setFlag(QGraphicsItem.ItemIsMovable)
         else:
             self.setFlags(self.flags() & ~QGraphicsItem.ItemIsSelectable)
@@ -86,7 +88,7 @@ class Item(QGraphicsSvgItem):
         self.setY(point.y() - internal_bounding.height()/2.0)
 
     def mouseReleaseEvent(self, event):
-        if event.buttons() & Qt.LeftButton:
+        if self.__pressed:
             duration = time.time() - self.timestampPressedEvent
 
             if duration < 0.3 and self.x() == self.positionPressedEvent[0] and self.y() == self.positionPressedEvent[1]:
