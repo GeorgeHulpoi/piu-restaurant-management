@@ -1,0 +1,13 @@
+{
+    "total": 0, 
+    "order-list": [
+        {
+            "name": "Lorem",
+            "price": 30
+        },
+        {
+            "name": "ipsum",
+            "price": 2
+        }
+    ]       
+}

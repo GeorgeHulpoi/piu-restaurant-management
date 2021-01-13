@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Lorem",
+        "price": "12",
+        "description": "lorem ipsum"
+    },
+    {
+        "name": "Lorem",
+        "price": "3",
+        "description": "lorem ipsum"
+    },
+    {
+        "name": "Lorem",
+        "price": "4",
+        "description": "lorem ipsum"
+    },
+    {
+        "name": "Lorem",
+        "price": "52",
+        "description": "lorem ipsum"
+    }
+]
