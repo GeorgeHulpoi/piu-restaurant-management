@@ -42,6 +42,7 @@ class TableRepository:
     def update(table):
         with TableRepository.__create_connection() as conn:
             cursor = conn.cursor()
+            print(table.getRotation())
             sql = "UPDATE " + TableRepository.tableName + " " \
                   "SET pos_x = " + str(table.getX()) + ", " + \
                   "pos_y = " + str(table.getY()) + ", " + \

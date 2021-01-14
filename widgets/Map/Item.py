@@ -20,6 +20,7 @@ class Item(QGraphicsSvgItem):
         self.__updateChanges = False
         self.__pressed = False
         self.__parent_widget = parent_widget
+        self.__rotation = 0.0
 
         svgPath = 'widgets/Map/assets/4_table.svg'
 
@@ -35,6 +36,7 @@ class Item(QGraphicsSvgItem):
 
         self.setX(self.__model.getX())
         self.setY(self.__model.getY())
+        self.rotateOnCenter(self.__model.getRotation())
         self.__updateChanges = True
 
         self.__parent_widget.modeObserver().subscribe(lambda m: self.onModeChanges(m))
@@ -44,9 +46,6 @@ class Item(QGraphicsSvgItem):
         if self.__updateChanges:
             if change == QGraphicsItem.GraphicsItemChange.ItemPositionHasChanged:
                 self.updatePosition(value)
-            elif change == QGraphicsItem.GraphicsItemChange.ItemTransformHasChanged:
-                self.__model.setRotation(self.rotation())
-
         return value
 
 
@@ -100,6 +99,8 @@ class Item(QGraphicsSvgItem):
                     self.y() == self.positionPressedEvent[1]:
                 self.__onClick()
 
+            if self.__parent_widget.mode() == MapMode.ROTATE_ITEMS:
+                self.__model.setRotation(self.__rotation)
             TableRepository.update(self.__model)
             self.__pressed = False
         super().mouseReleaseEvent(event)
@@ -121,10 +122,8 @@ class Item(QGraphicsSvgItem):
                 if angle < 0:
                     angle += 360
 
-            bounding = self.boundingRect()
-            x = bounding.x() + bounding.width() / 2
-            y = bounding.y() + bounding.height() / 2
-            self.setTransform(QTransform().translate(x, y).rotate(-angle).translate(-x, -y))
+            self.rotateOnCenter(-angle)
+            self.__rotation = -angle
 
         super().mouseMoveEvent(event)
 
@@ -152,5 +151,11 @@ class Item(QGraphicsSvgItem):
 
 
     def onDeleteCallback(self, checked=False):
-        TableRepository.deleteById(int(self.getModel().getId()))
+        TableRepository.deleteById(int(self.model().getId()))
         self.__parent_widget.scene().removeItem(self)
+
+    def rotateOnCenter(self, angle):
+        bounding = self.boundingRect()
+        half_x = bounding.x() + bounding.width() / 2
+        half_y = bounding.y() + bounding.height() / 2
+        self.setTransform(QTransform().translate(half_x, half_y).rotate(angle).translate(-half_x, -half_y))
