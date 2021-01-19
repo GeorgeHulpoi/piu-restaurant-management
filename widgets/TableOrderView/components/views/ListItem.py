@@ -16,7 +16,7 @@ class ListItem(QFrame):
         self.hook = hook
         self.title = item.getTitle()
         self.price = item.getPrice()
-        self.qty = 0
+        self.qty = 1
 
         # setup and config
         self.setObjectName("parent")

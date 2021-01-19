@@ -76,6 +76,7 @@ class Checkout(QFrame):
     def addListItem(self, item):
         layout = self.inner.layout()
         layout.insertWidget(layout.count() - 1, ListItem(item, self))
+        self.raiseTotalPrice(item)
 
     def raiseTotalPrice(self, item):
         self.total_price += item.getPrice()
