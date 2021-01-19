@@ -1,22 +1,22 @@
 [
     {
-        "name": "Lorem",
-        "price": "12",
+        "name": "Kebab",
+        "price": "23",
         "description": "lorem ipsum"
     },
     {
-        "name": "Lorem",
-        "price": "3",
+        "name": "Pizza",
+        "price": "36",
         "description": "lorem ipsum"
     },
     {
-        "name": "Lorem",
-        "price": "4",
+        "name": "Shaworma",
+        "price": "14",
         "description": "lorem ipsum"
     },
     {
-        "name": "Lorem",
-        "price": "52",
+        "name": "Mici",
+        "price": "20",
         "description": "lorem ipsum"
     }
 ]

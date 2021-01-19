@@ -2,20 +2,20 @@
     {
         "name": "Apple Martini",
         "price": "15",
-        "description": "2 oz vodka, 1 oz Cointreau "
+        "description": "lorem ipsum"
     },
     {
         "name": "Long Island Iced Tea",
         "price": "23",
-        "description": "1/2 oz vodka, 1/2 oz gin, 1/2 oz light rum, 1/4 oz tequila, 1/2 oz triple sec, 6 oz cola"
-    },
-    {
-        "name": "Lorem",
-        "price": "4",
         "description": "lorem ipsum"
     },
     {
-        "name": "Lorem",
+        "name": "Cuba Libre",
+        "price": "27",
+        "description": "lorem ipsum"
+    },
+    {
+        "name": "Black Russian",
         "price": "52",
         "description": "lorem ipsum"
     }
