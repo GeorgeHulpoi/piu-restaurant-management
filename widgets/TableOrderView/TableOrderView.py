@@ -72,9 +72,9 @@ class TableOrderView(QWidget):
         self.layout().addWidget(checkout)
 
         # setup resize event handler
-        WindowService.resizeSubject.subscribe(self.onWindowResize())
+        WindowService.resizeSubject.subscribe(self.onWindowResize)
 
-    def onWindowResize(self):
+    def onWindowResize(self, event):
         geometry = WindowService.instance.frameGeometry()
 
         if platform == "win32":

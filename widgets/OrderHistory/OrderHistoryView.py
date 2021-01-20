@@ -1,3 +1,5 @@
+from sys import platform
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
@@ -19,7 +21,7 @@ class OrderHistoryView(QWidget):
 
         # setup services
         OrderHistoryService.setWidget(self)
-        WindowService.resizeSubject.subscribe(self.onWindowResize())
+        WindowService.resizeSubject.subscribe(self.onWindowResize)
 
     def setUi(self):
         self.setVisible(False)
@@ -42,6 +44,10 @@ class OrderHistoryView(QWidget):
         self.layout().setStretch(0, 0)
         self.layout().setStretch(1, 1)
 
-    def onWindowResize(self):
+    def onWindowResize(self, event):
         geometry = WindowService.instance.frameGeometry()
-        self.setGeometry(0, 0, geometry.width(), geometry.height())
+
+        if platform == "win32":
+            self.setGeometry(0, 0, geometry.width() - 2, geometry.height() - 39)
+        else:
+            self.setGeometry(0, 0, geometry.width(), geometry.height())
