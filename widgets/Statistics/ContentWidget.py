@@ -2,6 +2,7 @@ import os
 import json
 import collections
 
+from datetime import datetime
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
@@ -14,83 +15,79 @@ class ContentWidget(QWidget):
     def __init__(self, parent):
         super(ContentWidget, self).__init__(parent)
 
+        self.items = {}
+        self.clients = {}
+
         self.setUi()
 
     def setUi(self):
-        piechart_data = {}          # initialise empty dictionary for piechart data
-        piechart_labels = []        # initialise empty list for piechart labels
-        piechart_quantities = []    # initialise empty list for piechart percentages
-
-        # read the data recursevly from existing files
-        self.readDataPieChart(
-            f"{os.path.dirname(__file__)}/../TableOrderView/orders",
-            piechart_data)
-
-        # extract the data from the dictionary and append it to it's specific list
-        for x in piechart_data:
-            piechart_labels.append(x)
-            piechart_quantities.append(piechart_data[x])
-
         self.setLayout(QHBoxLayout())
         self.setAttribute(Qt.WA_StyledBackground, True)
         self.layout().setContentsMargins(32, 0, 32, 32)
         self.layout().setSpacing(0)
+        self.createWidgets()
+
+    def refresh(self):
+        for i in reversed(range(self.layout().count())):
+            self.layout().itemAt(i).widget().deleteLater()
+
+        self.createWidgets()
+
+    def createWidgets(self):
+        self.readOrders()
         self.layout().addWidget(PieChartWidget('Most Bought Products',
-                                               piechart_labels, piechart_quantities, self))
-        self.layout().addWidget(BarChartWidget('Time Clients', [
-            '12:00 AM', '01:00 PM', '02:00 PM', '03:00 PM'], [3, 10, 20, 1], self))
+                                               list(self.items.keys()), list(self.items.values()), self))
+        self.layout().addWidget(BarChartWidget('Time Clients',
+                                               list(self.clients.keys()), list(self.clients.values()), self))
 
-    def readDataPieChart(self, dirname, out_dictionary):
-        try:
-            # auxiliary dictionary for local use
-            dictionary = {}
+    def readOrders(self):
+        widgetsPath = os.path.dirname(os.path.dirname(__file__))
+        d = {}
+        t = {
+            10: 0, 11: 0, 12: 0, 13: 0,
+            14: 0, 15: 0, 16: 0, 17: 0,
+            18: 0, 19: 0, 20: 0, 21: 0,
+            22: 0, 23: 0
+        }
 
-            # access from root folder, subdirectories and files
-            for root, subdirs, files in os.walk(dirname):
+        for root, subdirs, files in os.walk(os.path.join(widgetsPath, "TableOrderView", "orders")):
+            for filename in files:
+                if filename == "dummy.txt":
+                    continue
 
-                # for every file in files
-                for filename in files:
+                now = datetime.now()
+                date = datetime.fromtimestamp(int(os.path.splitext(filename)[0]))
 
-                    # ignore if the file indicates the dummy.txt
-                    if not filename.__eq__("dummy.txt"):
+                if now.year != date.year or now.month != date.month or now.day != date.day:
+                    continue
 
-                        # get the relative path from root to the actual file
-                        file_path = os.path.join(root, filename)
+                t[date.hour] += 1
+                filePath = os.path.join(root, filename)
+                with open(filePath) as file:
+                    data = json.load(file)
+                    for item in data['order-list']:
+                        if item['name'] in d:
+                            d[item['name']] += int(item['qty'])
+                        else:
+                            d[item['name']] = int(item['qty'])
 
-                        # open the file
-                        with open(file_path) as json_file:
+        d = collections.OrderedDict(sorted(d.items(), key=lambda kv: kv[1], reverse=True))
 
-                            # read and load data
-                            data = json.load(json_file)
-
-                            # iterate and create a dictionary where the key is name of the product
-                            # and the value is the quantity of the product. also, if product already
-                            # exists, increment they value for that key
-                            for item in data["order-list"]:
-                                if item["name"] in dictionary:
-                                    dictionary[item["name"]] += item["qty"]
-                                else:
-                                    dictionary[item["name"]] = item["qty"]
-
-            # order dictionary in descending order
-            sorted_dictionary = collections.OrderedDict(
-                sorted(dictionary.items(), key=lambda kv: kv[1], reverse=True))
-
-            # try get first top 4 most sold items
-            if len(sorted_dictionary) >= 4:
-                count = 0
-                for x in sorted_dictionary:
-                    out_dictionary[x] = sorted_dictionary[x]
-
-                    if count < 3:
-                        count += 1
-                    else:
-                        break
-            # if there are not 4 items but len still is greater than 0
-            elif len(sorted_dictionary) > 0:
-                for x in sorted_dictionary:
-                    out_dictionary[x] = sorted_dictionary[x]
+        c = 0
+        for name, qty in d.items():
+            c += 1
+            if c >= 4:
+                if 'Others' in self.items:
+                    self.items['Others'] += qty
+                else:
+                    self.items['Others'] = qty
             else:
-                out_dictionary["Product"] = 1
-        except Exception as e:
-            print(e)
+                self.items[name] = qty
+
+        self.clients = dict(map(lambda kv: (self.convertHourToString(kv[0]), kv[1]), t.items()))
+
+    def convertHourToString(self, value):
+        if value > 12:
+            return f"{value - 12} p.m."
+        else:
+            return f"{value} a.m."

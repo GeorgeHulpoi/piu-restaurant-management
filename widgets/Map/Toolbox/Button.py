@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtSvg import QSvgWidget
 from PyQt5.QtWidgets import QHBoxLayout
 import pathlib
+import os
 
 
 class Button(QPushButton):
@@ -13,7 +14,7 @@ class Button(QPushButton):
 
         self.mode = mode
 
-        iconPath = str(pathlib.Path(__file__).parent.absolute()) + "/assets/" + icon
+        iconPath = os.path.join(pathlib.Path(__file__).parent.absolute(), "assets", icon)
         icon = QSvgWidget(iconPath, self)
         icon.setFixedWidth(22)
         icon.setFixedHeight(22)

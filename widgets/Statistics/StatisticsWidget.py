@@ -33,13 +33,17 @@ class StatisticsWidget(QWidget):
         self.raise_()
 
         self.layout().addWidget(HeaderWidget(self, "Statistics"))
-        self.layout().addWidget(ContentWidget(self))
+        self.contentWidget = ContentWidget(self)
+        self.layout().addWidget(self.contentWidget)
         self.layout().setStretch(0, 0)
         self.layout().setStretch(1, 1)
 
     def onWindowResize(self, event):
         geometry = WindowService.instance.frameGeometry()
         self.setGeometry(0, 0, geometry.width(), geometry.height())
+
+    def refresh(self):
+        self.contentWidget.refresh()
 
     def hide(self):
         StatisticsService.hideWidget()

@@ -1,6 +1,7 @@
 import os
 import json
 import collections
+from datetime import datetime, time
 
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
@@ -38,7 +39,8 @@ class ContentWidget(QWidget):
 
         self.list_bills_data = []
         self.list_bills_widget = QListWidget()
-        self.dirname = f"{os.path.dirname(__file__)}/../TableOrderView/orders/"
+        widgetsPath = os.path.dirname(os.path.dirname(__file__))
+        self.dirname = os.path.join(widgetsPath, "TableOrderView", "orders")
 
         self.readBills()
         self.list_bills_widget.itemClicked.connect(
@@ -62,14 +64,17 @@ class ContentWidget(QWidget):
                         self.list_bills_data.append(filename)
 
             for bill in self.list_bills_data:
-                self.list_bills_widget.addItem(bill)
+                date = datetime.fromtimestamp(int(os.path.splitext(bill)[0]))
+                self.list_bills_widget.addItem(str(date))
 
         except Exception as e:
             print(e)
 
     def onItemClickedOpen(self, x):
         try:
-            filename = x.text()
+            date = x.text()
+            timestamp = int(datetime.timestamp(datetime.strptime(date, "%Y-%m-%d %H:%M:%S")))
+            filename = f"{timestamp}.json"
             file_path = os.path.join(self.dirname, filename)
             with open(file_path) as json_file:
                 data = json.load(json_file)

@@ -1,5 +1,5 @@
 from PyQt5.QtChart import QPieSeries, QChart, QChartView, QPieSlice
-from PyQt5.QtGui import QPainter, QFont, QBrush
+from PyQt5.QtGui import QPainter, QFont, QBrush, QColor
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
@@ -13,6 +13,7 @@ class PieChartWidget(QWidget):
             raise Exception('Labels have different value than values!')
         self.labels = labels
         self.values = values
+        self.colors = [QColor("#004D2F"), QColor("#00331F"), QColor("#00995E"), QColor("#05374D"), QColor("#056C99"), QColor("#031F2B")]
 
         series = self.createSeries()
         chart = self.createChart(series)
@@ -31,6 +32,7 @@ class PieChartWidget(QWidget):
             slice.setLabelColor(Qt.white)
             slice.setLabelVisible(True)
             slice.setLabel("{:.2f}%".format(100 * slice.percentage()))
+            slice.setColor(self.colors.pop())
 
         return series
 

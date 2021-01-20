@@ -1,9 +1,9 @@
 import json
 import os
+import time
 
-from datetime import datetime
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFrame, QHBoxLayout, QVBoxLayout, QScrollArea, QWidget, QLabel
+from PyQt5.QtWidgets import QFrame, QVBoxLayout, QScrollArea, QWidget, QLabel
 
 from ..shared.Colors import Colors
 from ..shared.Constants import Constants
@@ -88,45 +88,49 @@ class Checkout(QFrame):
             self.label_total.setText(f"{self.total_price} $")
 
     def checkoutAndPay(self):
+        try:
+            if self.total_price != 0:
+                # get layout
+                layout = self.inner.layout()
 
-        if self.total_price != 0:
-            # get layout
-            layout = self.inner.layout()
+                result = {
+                    "total": 0,
+                    "order-list": []
+                }
 
-            result = {
-                "total": 0,
-                "order-list": []
-            }
+                # remove all widgets from layout
+                for i in reversed(range(layout.count())):
+                    item = layout.itemAt(i).widget()
 
-            # remove all widgets from layout
-            for i in reversed(range(layout.count())):
-                item = layout.itemAt(i).widget()
+                    # layout.count() is index of fill_space which is of type QFrame
+                    if i != layout.count() - 1:
 
-                # layout.count() is index of fill_space which is of type QFrame
-                if i != layout.count() - 1:
+                        # read data and store it as a json
+                        order_item = {"name": "", "price": 0}
+                        order_item["name"] = item.getTitle()
+                        order_item["price"] = item.getPrice()
+                        order_item["qty"] = item.getQty()
+                        result["order-list"].append(order_item)
 
-                    # read data and store it as a json
-                    order_item = {"name": "", "price": 0}
-                    order_item["name"] = item.getTitle()
-                    order_item["price"] = item.getPrice()
-                    order_item["qty"] = item.getQty()
-                    result["order-list"].append(order_item)
+                    item.deleteLater()
 
-                item.deleteLater()
+                result["total"] = self.total_price
 
-            result["total"] = self.total_price
+                # read date and time and use as output name
+                #now = datetime.now(tz=None)
+                #dt_string = now.strftime("%d.%m.%Y_%H:%M:%S")
+                now = int(time.time())
 
-            # read date and time and use as output name
-            now = datetime.now()
-            dt_string = now.strftime("%d.%m.%Y~%H:%M:%S")
+                # export json
+                tableOrderViewPath = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+                with open(os.path.join(tableOrderViewPath, "orders", f"{now}.json"), "w") as json_output:
+                    json.dump(result, json_output)
 
-            # export json
-            with open(f"{os.path.dirname(__file__)}/../../orders/{dt_string}.json", "w") as json_output:
-                json.dump(result, json_output)
+                # add fill space
+                layout.addWidget(QFrame(self.inner))
 
-            # add fill space
-            layout.addWidget(QFrame(self.inner))
-
-            # reset total price
-            self.total_price = 0
-            self.label_total.setText(f"{self.total_price} $")
+                # reset total price
+                self.total_price = 0
+                self.label_total.setText(f"{self.total_price} $")
+        except Exception as e:
+            print(e)

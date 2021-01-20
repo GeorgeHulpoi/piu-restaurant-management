@@ -1,4 +1,4 @@
-from PyQt5.QtChart import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
+from PyQt5.QtChart import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis, QHorizontalBarSeries
 from PyQt5.QtGui import QPainter, QFont, QBrush, QColor
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
@@ -23,7 +23,7 @@ class BarChartWidget(QWidget):
         self.layout().addWidget(self.chartView)
 
     def createSeries(self):
-        series = QBarSeries()
+        series = QHorizontalBarSeries()
         set = QBarSet("value")
         for i in range(len(self.values)):
             set.append(self.values[i])
@@ -35,14 +35,14 @@ class BarChartWidget(QWidget):
         chart = QChart()
         chart.addSeries(series)
         chart.setTitle(self.title)
+
         axisX = QBarCategoryAxis()
         axisX.append(self.labels)
         labelsFont = QFont(axisX.labelsFont())
         labelsFont.setPixelSize(14)
         axisX.setLabelsFont(labelsFont)
         axisX.setLabelsColor(QColor(Qt.white))
-        chart.addAxis(axisX, Qt.AlignBottom)
-        series.attachAxis(axisX)
+
         axisY = QValueAxis()
         axisY.setTitleBrush(QBrush(QColor(Qt.white)))
         axisY.setTitleText("Clients")
@@ -51,14 +51,17 @@ class BarChartWidget(QWidget):
         axisY.setLabelsFont(labelsFont)
         axisY.setLabelsColor(QColor(Qt.white))
         axisY.setRange(0, max(self.values))
-        chart.addAxis(axisY, Qt.AlignLeft)
-        series.attachAxis(axisY)
+        axisY.applyNiceNumbers()
+
+        chart.addAxis(axisX, Qt.AlignLeft)
+        chart.addAxis(axisY, Qt.AlignBottom)
         chart.setBackgroundVisible(False)
         titleFont = QFont(chart.titleFont())
         titleFont.setPixelSize(22)
         chart.setTitleFont(titleFont)
         chart.setTitleBrush(QBrush(Qt.white))
         chart.legend().setVisible(False)
+
         return chart
 
     def createChartView(self, chart, parent=None):

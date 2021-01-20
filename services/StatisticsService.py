@@ -8,6 +8,7 @@ class StatisticsService:
     @staticmethod
     def showWidget():
         if StatisticsService.widget is not None:
+            StatisticsService.widget.refresh()
             StatisticsService.widget.setVisible(True)
 
     @staticmethod
