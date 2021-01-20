@@ -10,11 +10,16 @@ from widgets.Header.HeaderWidget import HeaderWidget
 class OrderHistoryView(QWidget):
 
     def __init__(self, parent):
+
+        # call super
         super(OrderHistoryView, self).__init__(parent)
-        OrderHistoryService.setWidget(self)
+
+        # setup the user interface
         self.setUi()
 
-        WindowService.resizeSubject.subscribe(self.onWindowResize)
+        # setup services
+        OrderHistoryService.setWidget(self)
+        WindowService.resizeSubject.subscribe(self.onWindowResize())
 
     def setUi(self):
         self.setVisible(False)
@@ -23,7 +28,6 @@ class OrderHistoryView(QWidget):
         self.layout().setContentsMargins(0, 0, 0, 0)
         self.layout().setSpacing(0)
 
-        self.onWindowResize(None)
         self.setStyleSheet("""
         QWidget
         {
@@ -38,6 +42,6 @@ class OrderHistoryView(QWidget):
         self.layout().setStretch(0, 0)
         self.layout().setStretch(1, 1)
 
-    def onWindowResize(self, event):
+    def onWindowResize(self):
         geometry = WindowService.instance.frameGeometry()
         self.setGeometry(0, 0, geometry.width(), geometry.height())

@@ -1,9 +1,9 @@
 import os
 import json
-import collections
-from datetime import datetime, time
 
-from PyQt5.QtGui import QFont
+from sys import platform
+from datetime import datetime
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListWidget, QPlainTextEdit
 
@@ -13,40 +13,43 @@ class ContentWidget(QWidget):
     def __init__(self, parent):
         super(ContentWidget, self).__init__(parent)
 
+        self.read_area = QPlainTextEdit(self)
+        self.widgets_path = os.path.dirname(os.path.dirname(__file__))
+        self.dirname = os.path.join(self.widgets_path, "TableOrderView", "orders")
+        self.list_bills_widget = QListWidget()
+        self.list_bills_data = []
         self.setUi()
 
     def setUi(self):
-        self.setStyleSheet("""
-            QListWidget {
-                color: white;
-                border: 1px solid white;
-                border-radius: 10px;
-                padding: 15px;
-            }
-
-            QPlainTextEdit {
-                font-family: monospace;
-                color: white;
-                border: 1px solid white;
-                border-radius: 10px;
-                padding: 15px;
-            }
-        """)
+        if platform == "win32":
+            self.setStyleSheet("""
+                QListWidget, QPlainTextEdit {
+                    font-family: 'Courier New';
+                    font-size: 15px;
+                    color: white;
+                    border: 1px solid white;
+                    border-radius: 10px;
+                    padding: 15px;
+                }
+            """)
+        else:
+            self.setStyleSheet("""
+                QListWidget, QPlainTextEdit {
+                    font-family: 'monospace';
+                    color: white;
+                    border: 1px solid white;
+                    border-radius: 10px;
+                    padding: 15px;
+                }
+            """)
 
         self.setLayout(QHBoxLayout())
         self.setAttribute(Qt.WA_StyledBackground, True)
         self.layout().setContentsMargins(32, 0, 32, 32)
 
-        self.list_bills_data = []
-        self.list_bills_widget = QListWidget()
-        widgetsPath = os.path.dirname(os.path.dirname(__file__))
-        self.dirname = os.path.join(widgetsPath, "TableOrderView", "orders")
-
         self.readBills()
         self.list_bills_widget.itemClicked.connect(
             lambda x: self.onItemClickedOpen(x))
-
-        self.read_area = QPlainTextEdit(self)
 
         self.layout().addWidget(self.list_bills_widget)
         self.layout().addWidget(self.read_area)
@@ -54,7 +57,7 @@ class ContentWidget(QWidget):
     def readBills(self):
         try:
             # access from root folder, subdirectories and files
-            for root, subdirs, files in os.walk(self.dirname):
+            for root, subdir, files in os.walk(self.dirname):
 
                 # for every file in files
                 for filename in files:

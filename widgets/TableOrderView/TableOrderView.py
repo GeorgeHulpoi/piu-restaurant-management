@@ -1,17 +1,19 @@
 import os
 
-from PyQt5.QtWidgets import QFrame, QHBoxLayout, QStackedWidget
+from sys import platform
+
+from PyQt5.QtWidgets import QWidget, QFrame, QHBoxLayout, QStackedWidget
 from .components.shared.Colors import Colors
 from .components.shared.Constants import Constants
 
 from .components.views.Checkout import Checkout
 from .components.views.Menu import Menu
-from .components.views.MenuButton import MenuButton
 from .components.views.MenuCategories import MenuCategories
 from .components.views.MenuItems import MenuItems
+from services.WindowService import WindowService
 
 
-class TableOrderView(QFrame):
+class TableOrderView(QWidget):
 
     def __init__(self, parent):
 
@@ -32,19 +34,14 @@ class TableOrderView(QFrame):
         self.layout().setSpacing(0)
 
         # define menus
-        menu_categories = MenuCategories()
+        menu_categories = MenuCategories(self)
         menu = Menu(self, menu_categories)
 
         # define a stacked widget for categories
-        stacked_menu = QStackedWidget()
-        stacked_menu.setStyleSheet(f"""
-            QStackedWidget {{
-                background-color: red;
-            }}
-        """)
+        stacked_menu = QStackedWidget(self)
 
         # define checkout widget
-        checkout = Checkout()
+        checkout = Checkout(self)
 
         # define a page/widget for each category
         category_food = MenuItems(
@@ -59,7 +56,7 @@ class TableOrderView(QFrame):
         stacked_menu.addWidget(category_drinks)
         stacked_menu.addWidget(category_dessert)
 
-        # add a fourth page for startup raesons only
+        # add a fourth page for startup reasons only
         stacked_menu.addWidget(QFrame())
 
         # set starting index for stacked widget
@@ -73,3 +70,14 @@ class TableOrderView(QFrame):
         self.layout().addWidget(menu_categories)
         self.layout().addWidget(stacked_menu)
         self.layout().addWidget(checkout)
+
+        # setup resize event handler
+        WindowService.resizeSubject.subscribe(self.onWindowResize())
+
+    def onWindowResize(self):
+        geometry = WindowService.instance.frameGeometry()
+
+        if platform == "win32":
+            self.setGeometry(0, 0, geometry.width() - 2, geometry.height() - 39)
+        else:
+            self.setGeometry(0, 0, geometry.width(), geometry.height())

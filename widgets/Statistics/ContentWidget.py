@@ -50,20 +50,17 @@ class ContentWidget(QWidget):
             22: 0, 23: 0
         }
 
-        for root, subdirs, files in os.walk(os.path.join(widgetsPath, "TableOrderView", "orders")):
+        for root, subdir, files in os.walk(os.path.join(widgetsPath, "TableOrderView", "orders")):
             for filename in files:
                 if filename == "dummy.txt":
                     continue
 
-                now = datetime.now()
                 date = datetime.fromtimestamp(int(os.path.splitext(filename)[0]))
 
-                if now.year != date.year or now.month != date.month or now.day != date.day:
-                    continue
-
                 t[date.hour] += 1
-                filePath = os.path.join(root, filename)
-                with open(filePath) as file:
+                file_path = os.path.join(root, filename)
+
+                with open(file_path) as file:
                     data = json.load(file)
                     for item in data['order-list']:
                         if item['name'] in d:

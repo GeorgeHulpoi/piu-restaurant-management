@@ -8,10 +8,10 @@ class MenuCategories(QFrame):
 
     is_open = True
 
-    def __init__(self):
+    def __init__(self, parent=None):
 
         # call super
-        super(MenuCategories, self).__init__()
+        super(MenuCategories, self).__init__(parent)
 
         # setup and config
         self.setFixedWidth(200)

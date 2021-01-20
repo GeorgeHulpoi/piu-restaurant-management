@@ -13,9 +13,9 @@ from .MenuButton import MenuButton
 
 class Checkout(QFrame):
 
-    def __init__(self):
+    def __init__(self, parent=None):
 
-        super(Checkout, self).__init__()
+        super(Checkout, self).__init__(parent)
 
         self.setObjectName("self")
         self.setStyleSheet(f"""
