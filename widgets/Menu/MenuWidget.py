@@ -1,11 +1,8 @@
-import pathlib
-
-from PyQt5 import QtCore
-from PyQt5.QtGui import QCursor, QIcon
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from PyQt5.QtCore import Qt
 
-from services.StatisticsWidgetService import StatisticsWidgetService
+from services.OrderHistoryService import OrderHistoryService
+from services.StatisticsService import StatisticsService
 from widgets.Menu.ItemWidget import ItemWidget
 
 
@@ -34,9 +31,15 @@ class MenuWidget(QWidget):
 
         statisticsBtn = ItemWidget("Statistics", self)
         statisticsBtn.clicked.connect(self.OnStatisticsButtonClicked)
-        self.layout().addWidget(statisticsBtn)
+
         orderHistoryBtn = ItemWidget("Order History", self)
+        orderHistoryBtn.clicked.connect(self.OnOrderHistoryButtonClicked)
+
+        self.layout().addWidget(statisticsBtn)
         self.layout().addWidget(orderHistoryBtn)
 
     def OnStatisticsButtonClicked(self):
-        StatisticsWidgetService.showWidget()
+        StatisticsService.showWidget()
+
+    def OnOrderHistoryButtonClicked(self):
+        OrderHistoryService.showWidget()

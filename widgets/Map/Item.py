@@ -6,7 +6,7 @@ from PyQt5.QtSvg import QGraphicsSvgItem
 from PyQt5.QtWidgets import QGraphicsItem, QMenu
 from PyQt5.QtGui import QTransform, QCursor
 from repositories.TableRepository import TableRepository
-from services.TableOrderViewService import TableOrderViewService
+from services.TableOrderService import TableOrderService
 import math
 import time
 from widgets.Map.MapMode import MapMode
@@ -41,13 +41,11 @@ class Item(QGraphicsSvgItem):
 
         self.__parent_widget.modeObserver().subscribe(lambda m: self.onModeChanges(m))
 
-
     def itemChange(self, change, value):
         if self.__updateChanges:
             if change == QGraphicsItem.GraphicsItemChange.ItemPositionHasChanged:
                 self.updatePosition(value)
         return value
-
 
     def onModeChanges(self, mode):
         if mode == MapMode.ROTATE_ITEMS:
@@ -60,10 +58,8 @@ class Item(QGraphicsSvgItem):
             self.setFlags(self.flags() & ~QGraphicsItem.ItemIsSelectable)
             self.setFlags(self.flags() & ~QGraphicsItem.ItemIsMovable)
 
-
     def model(self):
         return self.__model
-
 
     def updatePosition(self, value):
         if self.__parent_widget.mode() == MapMode.MOVE_ITEMS or \
@@ -84,12 +80,10 @@ class Item(QGraphicsSvgItem):
             self.__model.setX(self.x())
             self.__model.setY(self.y())
 
-
     def setCenter(self, point):
         internal_bounding = self.boundingRect()
         self.setX(point.x() - internal_bounding.width() / 2.0)
         self.setY(point.y() - internal_bounding.height() / 2.0)
-
 
     def mouseReleaseEvent(self, event):
         if self.__pressed:
@@ -105,10 +99,8 @@ class Item(QGraphicsSvgItem):
             self.__pressed = False
         super().mouseReleaseEvent(event)
 
-
     def __onClick(self):
-        TableOrderViewService.showWidget(self.__model)
-
+        TableOrderService.showWidget()
 
     def mouseMoveEvent(self, event):
         if self.__pressed == True and self.__parent_widget.mode() == MapMode.ROTATE_ITEMS:
@@ -127,7 +119,6 @@ class Item(QGraphicsSvgItem):
 
         super().mouseMoveEvent(event)
 
-
     def mousePressEvent(self, event):
         if event.buttons() & Qt.LeftButton:
             self.__pressed = True
@@ -135,7 +126,6 @@ class Item(QGraphicsSvgItem):
             self.positionPressedEvent = (self.x(), self.y())
             self.mouse_pos_pressed = event.scenePos()
         super().mousePressEvent(event)
-
 
     def contextMenuEvent(self, event):
         menu = QMenu()
@@ -145,10 +135,8 @@ class Item(QGraphicsSvgItem):
         action.triggered.connect(self.onDeleteCallback)
         menu.exec(event.screenPos())
 
-
     def onOpenCallback(self, checked=False):
         self.__onClick()
-
 
     def onDeleteCallback(self, checked=False):
         TableRepository.deleteById(int(self.model().getId()))
@@ -158,4 +146,5 @@ class Item(QGraphicsSvgItem):
         bounding = self.boundingRect()
         half_x = bounding.x() + bounding.width() / 2
         half_y = bounding.y() + bounding.height() / 2
-        self.setTransform(QTransform().translate(half_x, half_y).rotate(angle).translate(-half_x, -half_y))
+        self.setTransform(QTransform().translate(
+            half_x, half_y).rotate(angle).translate(-half_x, -half_y))

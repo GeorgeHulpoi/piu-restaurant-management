@@ -1,17 +1,19 @@
 # PyQt5
+from widgets.OrderHistory.OrderHistoryView import OrderHistoryView
 from PyQt5 import QtCore, QtWidgets
 
 # REPOSITORIES
 from repositories.TableRepository import TableRepository
 
 # SERVICES
-from services.TableOrderViewService import TableOrderViewService
+from services.TableOrderService import TableOrderService
 
 # WIDGETS
 from services.WindowService import WindowService
 from widgets.Map.MapWidget import MapWidget
 from widgets.Map.Item import Item
 from widgets.Statistics.StatisticsWidget import StatisticsWidget
+from widgets.OrderHistory.OrderHistoryView import OrderHistoryView
 from widgets.TableOrderView.TableOrderView import TableOrderView
 from widgets.Menu.MenuWidget import MenuWidget
 
@@ -52,14 +54,17 @@ class MainWindow(QtWidgets.QMainWindow):
         # ADD TABLE MAP WIDGET TO BASE WIDGET
         centralwidget.layout().addWidget(MenuWidget(self))
         centralwidget.layout().addWidget(self.__mapWidget)
+
+        # ADD SIDE MENU WIDGETS
         StatisticsWidget(centralwidget)
+        OrderHistoryView(centralwidget)
 
         # SETUP MAIN WIDGET
         self.setCentralWidget(centralwidget)
 
         # SETUP TABLE ORDER SERVICE
-        TableOrderViewService.setWidget(TableOrderView(self))
-        TableOrderViewService().hideWidget()
+        TableOrderService.setWidget(TableOrderView(self))
+        TableOrderService().hideWidget()
 
         # CENTER WINDOW BEFORE DISPLAY
         rectangle = self.frameGeometry()

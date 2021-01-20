@@ -1,16 +1,17 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from services.StatisticsService import StatisticsService
+
+from .ContentWidget import ContentWidget
+from services.OrderHistoryService import OrderHistoryService
 from services.WindowService import WindowService
-from widgets.Statistics.ContentWidget import ContentWidget
 from widgets.Header.HeaderWidget import HeaderWidget
 
 
-class StatisticsWidget(QWidget):
+class OrderHistoryView(QWidget):
 
     def __init__(self, parent):
-        super(StatisticsWidget, self).__init__(parent)
-        StatisticsService.setWidget(self)
+        super(OrderHistoryView, self).__init__(parent)
+        OrderHistoryService.setWidget(self)
         self.setUi()
 
         WindowService.resizeSubject.subscribe(self.onWindowResize)
@@ -32,7 +33,7 @@ class StatisticsWidget(QWidget):
         self.setAttribute(Qt.WA_StyledBackground, True)
         self.raise_()
 
-        self.layout().addWidget(HeaderWidget(self, "Statistics"))
+        self.layout().addWidget(HeaderWidget(self, "Checkout History"))
         self.layout().addWidget(ContentWidget(self))
         self.layout().setStretch(0, 0)
         self.layout().setStretch(1, 1)
@@ -40,6 +41,3 @@ class StatisticsWidget(QWidget):
     def onWindowResize(self, event):
         geometry = WindowService.instance.frameGeometry()
         self.setGeometry(0, 0, geometry.width(), geometry.height())
-
-    def hide(self):
-        StatisticsService.hideWidget()
