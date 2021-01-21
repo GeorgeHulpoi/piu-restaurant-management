@@ -17,7 +17,6 @@ class ContentWidget(QWidget):
 
         self.items = {}
         self.clients = {}
-
         self.setUi()
 
     def setUi(self):
@@ -41,7 +40,7 @@ class ContentWidget(QWidget):
                                                list(self.clients.keys()), list(self.clients.values()), self))
 
     def readOrders(self):
-        widgetsPath = os.path.dirname(os.path.dirname(__file__))
+        widgets_path = os.path.dirname(os.path.dirname(__file__))
         d = {}
         t = {
             10: 0, 11: 0, 12: 0, 13: 0,
@@ -50,14 +49,18 @@ class ContentWidget(QWidget):
             22: 0, 23: 0
         }
 
-        for root, subdir, files in os.walk(os.path.join(widgetsPath, "TableOrderView", "orders")):
+        for root, subdir, files in os.walk(os.path.join(widgets_path, "TableOrderView", "orders")):
             for filename in files:
                 if filename == "dummy.txt":
                     continue
 
                 date = datetime.fromtimestamp(int(os.path.splitext(filename)[0]))
 
-                t[date.hour] += 1
+                try:
+                    t[date.hour] += 1
+                except KeyError:
+                    print("Orders are to be taken between 10 and 23 o'clock!\n")
+
                 file_path = os.path.join(root, filename)
 
                 with open(file_path) as file:
