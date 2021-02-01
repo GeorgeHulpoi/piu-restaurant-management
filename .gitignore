@@ -216,3 +216,5 @@ pip-log.txt
 
 venv/
 .idea/
+.vscode/
+Pipfile.lock
