@@ -1,1 +1,0 @@
-pipenv run install_dependencies_script.bat
